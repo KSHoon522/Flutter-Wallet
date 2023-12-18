@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # flutter_animation_masterclass
 
 A new Flutter project.
@@ -26,3 +27,6 @@ samples, guidance on mobile development, and a full API reference.
 =======
 # SwipingCards
 >>>>>>> 69df465ace6fbe45651ff5b3d6c2558811e8fc4e
+=======
+# flutter_MusicPlayer
+>>>>>>> 54482c33b7eefa3a0ca0004cad0014e78d364c75
