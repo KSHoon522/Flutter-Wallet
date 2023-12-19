@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animation_masterclass/screens/music_player_detail_screen.dart';
 
 class MusicPlayerScreen extends StatefulWidget {
   const MusicPlayerScreen({super.key});
@@ -15,10 +16,39 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
   );
   int _currentPage = 0;
 
+  final ValueNotifier<double> _scroll = ValueNotifier<double>(0.0);
+
   void _onPageChanged(int newPage) {
     setState(() {
       _currentPage = newPage;
     });
+  }
+
+  @override
+  void initState() {
+    _pageController.addListener(() {
+      if (_pageController.page == null) {
+        return;
+      } else {
+        _scroll.value = _pageController.page!;
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onTap(int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MusicPlayerDetailScreen(index: index),
+      ),
+    );
   }
 
   @override
@@ -61,24 +91,40 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 350,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.4),
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                          )
-                        ],
-                        image: DecorationImage(
-                          image: AssetImage(
-                            "assets/covers/${index + 1}.jpg",
+                    ValueListenableBuilder(
+                      valueListenable: _scroll,
+                      builder: (context, scroll, child) {
+                        final difference = (scroll - index).abs();
+                        final scale = 1 - (difference * 0.13);
+                        return GestureDetector(
+                          onTap: () => _onTap(index + 1),
+                          child: Hero(
+                            tag: "${index + 1}",
+                            child: Transform.scale(
+                              scale: scale,
+                              child: Container(
+                                height: 350,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.4),
+                                      blurRadius: 10,
+                                      spreadRadius: 2,
+                                    )
+                                  ],
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      "assets/covers/${index + 1}.jpg",
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                        );
+                      },
                     ),
                     const SizedBox(
                       height: 35,
