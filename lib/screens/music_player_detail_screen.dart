@@ -16,8 +16,22 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _progressController = AnimationController(
     vsync: this,
-    duration: const Duration(minutes: 1),
+    duration: Duration(seconds: _defaultPlayDuration),
   )..repeat(reverse: true);
+
+  final _defaultPlayDuration = 120;
+
+  List<String> _timeFormmater(int progressTime) {
+    final remainTimes = _defaultPlayDuration - progressTime;
+
+    final minutes = (progressTime ~/ 60).toString().padLeft(2, "0");
+    final seconds = (progressTime % 60).toString().padLeft(2, "0");
+
+    final reaminMinutes = (remainTimes ~/ 60).toString().padLeft(2, "0");
+    final remainSeconds = (remainTimes % 60).toString().padLeft(2, "0");
+
+    return ["$minutes:$seconds", "$reaminMinutes:$remainSeconds"];
+  }
 
   @override
   void dispose() {
@@ -78,28 +92,34 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
           const SizedBox(
             height: 10,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            child: Row(
-              children: [
-                Text(
-                  "00:00",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  "01:00",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: DefaultTextStyle(
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+                fontWeight: FontWeight.w600,
+              ),
+              child: AnimatedBuilder(
+                animation: _progressController,
+                builder: (context, child) {
+                  final progressTime =
+                      (_progressController.value * _defaultPlayDuration)
+                          .round();
+                  final time = _timeFormmater(progressTime);
+                  return Row(
+                    children: [
+                      Text(
+                        time[0],
+                      ),
+                      const Spacer(),
+                      Text(
+                        time[1],
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
           const SizedBox(
