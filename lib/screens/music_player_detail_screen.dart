@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class MusicPlayerDetailScreen extends StatefulWidget {
   final int index;
@@ -13,11 +14,28 @@ class MusicPlayerDetailScreen extends StatefulWidget {
 }
 
 class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final AnimationController _progressController = AnimationController(
     vsync: this,
     duration: Duration(seconds: _defaultPlayDuration),
   )..repeat(reverse: true);
+
+  late final AnimationController _marqueeController = AnimationController(
+    vsync: this,
+    duration: const Duration(
+      seconds: 20,
+    ),
+  )..repeat(reverse: true);
+
+  late final AnimationController _playPauseController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
+
+  late final Animation<Offset> _marqueeTween = Tween(
+    begin: const Offset(0.1, 0),
+    end: const Offset(-0.1, 0),
+  ).animate(_marqueeController);
 
   final _defaultPlayDuration = 120;
 
@@ -33,9 +51,19 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     return ["$minutes:$seconds", "$reaminMinutes:$remainSeconds"];
   }
 
+  void _onPlayPauseTap() {
+    if (_playPauseController.isCompleted) {
+      _playPauseController.reverse();
+    } else {
+      _playPauseController.forward();
+    }
+  }
+
   @override
   void dispose() {
     _progressController.dispose();
+    _marqueeController.dispose();
+    _playPauseController.dispose();
     super.dispose();
   }
 
@@ -135,13 +163,43 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
           const SizedBox(
             height: 5,
           ),
-          const Text(
-            "A Film by Christopher Nolan - Original Motion Picture Stoundtrack",
-            maxLines: 1,
-            style: TextStyle(
-              fontSize: 18,
+          SlideTransition(
+            position: _marqueeTween,
+            child: const Text(
+              "A Film by Christopher Nolan - Original Motion Picture Stoundtrack",
+              maxLines: 1,
+              overflow: TextOverflow.visible,
+              softWrap: false,
+              style: TextStyle(
+                fontSize: 18,
+              ),
             ),
-          )
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          GestureDetector(
+            onTap: _onPlayPauseTap,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedIcon(
+                  icon: AnimatedIcons.pause_play,
+                  progress: _playPauseController,
+                  size: 60,
+                ),
+                /* Lottie.asset(
+                  "assets/animations/play_lottie.json",
+                  controller: _playPauseController,
+                  onLoaded: (composition) {
+                    _playPauseController.duration = composition.duration;
+                  },
+                  width: 200,
+                  height: 100,
+                ), */
+              ],
+            ),
+          ),
         ],
       ),
     );
