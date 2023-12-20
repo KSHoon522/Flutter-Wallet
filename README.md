@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # flutter_animation_masterclass
 
 A new Flutter project.
@@ -30,3 +31,6 @@ samples, guidance on mobile development, and a full API reference.
 =======
 # flutter_MusicPlayer
 >>>>>>> 54482c33b7eefa3a0ca0004cad0014e78d364c75
+=======
+# Rive
+>>>>>>> 01d5b142b4b88cae0781ed6e6a6257ee4a345d1b
