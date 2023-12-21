@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # flutter_animation_masterclass
 
 A new Flutter project.
@@ -34,3 +35,6 @@ samples, guidance on mobile development, and a full API reference.
 =======
 # Rive
 >>>>>>> 01d5b142b4b88cae0781ed6e6a6257ee4a345d1b
+=======
+# MaterialMotion
+>>>>>>> a53c317e0392cb6f128f1d117eafed43904e9856
