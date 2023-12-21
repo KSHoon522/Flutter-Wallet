@@ -18,14 +18,14 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
   late final AnimationController _progressController = AnimationController(
     vsync: this,
     duration: Duration(seconds: _defaultPlayDuration),
-  ) /* ..repeat(reverse: true) */;
+  )..repeat(reverse: false);
 
   late final AnimationController _marqueeController = AnimationController(
     vsync: this,
     duration: const Duration(
       seconds: 20,
     ),
-  ) /* ..repeat(reverse: true) */;
+  )..repeat(reverse: true);
 
   late final AnimationController _playPauseController = AnimationController(
     vsync: this,
@@ -128,6 +128,11 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
       _playPauseController.reverse();
     } else {
       _playPauseController.forward();
+    }
+    if (_progressController.isAnimating) {
+      _progressController.stop();
+    } else {
+      _progressController.forward();
     }
   }
 
