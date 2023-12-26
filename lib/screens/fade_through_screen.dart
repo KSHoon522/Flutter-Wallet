@@ -28,7 +28,7 @@ class _FadeThroughScreenState extends State<FadeThroughScreen> {
       body: PageTransitionSwitcher(
         transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
             FadeThroughTransition(
-          fillColor: Colors.black,
+          fillColor: Colors.white,
           animation: primaryAnimation,
           secondaryAnimation: secondaryAnimation,
           child: child,

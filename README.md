@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # flutter_animation_masterclass
 
 A new Flutter project.
@@ -38,3 +39,6 @@ samples, guidance on mobile development, and a full API reference.
 =======
 # MaterialMotion
 >>>>>>> a53c317e0392cb6f128f1d117eafed43904e9856
+=======
+# Flutter-Wallet
+>>>>>>> 5af64d4b799e064ad15d18958a8bca97b7439b65
