@@ -205,18 +205,63 @@ class CardDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Transactions"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Hero(
-              tag: "$index",
-              child: CreditCard(
-                index: index,
-                isExpanded: false,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Hero(
+                tag: "$index",
+                child: CreditCard(
+                  index: index,
+                  isExpanded: false,
+                ),
               ),
-            ),
-          ],
+              ...[
+                for (var i in [1, 1, 1, 1, 1, 1, 1])
+                  Container(
+                    margin: const EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                    child: ListTile(
+                      tileColor: Colors.grey.shade200,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      leading: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        child: const Icon(
+                          Icons.shopping_bag,
+                          color: Colors.white,
+                        ),
+                      ),
+                      title: const Text(
+                        "Uniqlo",
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "강남점",
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                        ),
+                      ),
+                      trailing: const Text(
+                        "\$109",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+              ].animate(interval: 500.milliseconds).fadeIn(begin: 0)
+            ],
+          ),
         ),
       ),
     );
