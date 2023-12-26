@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -16,26 +18,27 @@ class _WalletScreenState extends State<WalletScreen> {
         title: const Text("Wallet"),
       ),
       body: Center(
-        child: Animate(
-          effects: [
-            FadeEffect(
+        child: const Text(
+          "Hello!",
+          style: TextStyle(fontSize: 66),
+        )
+            .animate()
+            .fadeIn(
               begin: 0,
-              end: 1,
               duration: 3.seconds,
-              curve: Curves.easeInCubic,
-            ),
-            ScaleEffect(
+            )
+            .scale(
               alignment: Alignment.center,
               begin: Offset.zero,
-              end: const Offset(1, 1),
               duration: 3.seconds,
+              end: const Offset(1, 1),
+            )
+            .then()
+            .slideX(
+              begin: 0,
+              end: -10,
+              duration: 2.seconds,
             ),
-          ],
-          child: const Text(
-            "Hello!",
-            style: TextStyle(fontSize: 66),
-          ),
-        ),
       ),
     );
   }
